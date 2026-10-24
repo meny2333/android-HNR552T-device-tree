@@ -1,0 +1,5 @@
+root:x:0:
+system:x:1000:
+shell:x:2000:
+cache:x:2001:
+drmrpc:x:1023:

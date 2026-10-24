@@ -78,6 +78,7 @@ on property:sys.usb.configfs=1 && property:sys.usb.ffs.ready=1 && property:sys.u
 # FBE: mount vroot/vendor, start HIDL keymaster/gatekeeper
 on fs
     mount ext4 /dev/block/platform/soc/soc:ap-apb/71400000.sdio/by-name/vroot /system_root ro
+    wait /dev/block/platform/soc/soc:ap-apb/71400000.sdio/by-name/vendor 10
     mount ext4 /dev/block/platform/soc/soc:ap-apb/71400000.sdio/by-name/vendor /vendor ro
 
 on post-fs
