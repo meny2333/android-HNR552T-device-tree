@@ -74,3 +74,28 @@ on property:sys.usb.configfs=1 && property:sys.usb.ffs.ready=1 && property:sys.u
     start adbd
     setprop sys.usb.state ${sys.usb.config}
     setprop vendor.sys.usb.state ${sys.usb.config}
+
+# FBE: mount vroot/vendor, start HIDL keymaster/gatekeeper
+on fs
+    mount ext4 /dev/block/platform/soc/soc:ap-apb/71400000.sdio/by-name/vroot /system_root ro
+    mount ext4 /dev/block/platform/soc/soc:ap-apb/71400000.sdio/by-name/vendor /vendor ro
+
+on post-fs
+    start hwservicemanager
+    start vendor.keymaster-3-0
+    start vendor.gatekeeper-1-0
+
+service hwservicemanager /system/bin/hwservicemanager
+    class hal
+    user system
+    group system
+
+service vendor.keymaster-3-0 /vendor/bin/hw/android.hardware.keymaster@3.0-service
+    class early_hal
+    user system
+    group system drmrpc
+
+service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+    class hal
+    user system
+    group system

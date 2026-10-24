@@ -1,13 +1,2 @@
 #add for board init.rc for recovery mode
-on fs
-    mount ext4 /dev/block/platform/soc/soc:ap-apb/71400000.sdio/by-name/vendor /vendor ro
-
 on post-fs
-    start vendor.qseecomd
-    exec - system system -- /vendor/bin/init.qti.qseecomd.sh
-    write /dev/ipa 1
-
-service vendor.qseecomd /vendor/bin/qseecomd
-    class core
-    user root
-    group root
